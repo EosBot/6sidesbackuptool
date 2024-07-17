@@ -11,7 +11,7 @@ import borg.archiver
 from borg.logger import JsonFormatter
 from dotenv import dotenv_values, load_dotenv
 
-from .options import (
+from options import (
     ArchiveInput,
     ArchiveOutput,
     ArchivePattern,

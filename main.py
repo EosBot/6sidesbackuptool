@@ -4,8 +4,8 @@ from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Union, Tuple, Annotated
 from dotenv import load_dotenv
-from .celery import celery_app
-from .tasks import (
+from celery import celery_app
+from tasks import (
     init_backup_task, create_backup_task, extract_backup_task,
     check_backup_task, rename_backup_task, list_backup_task,
     diff_backup_task, delete_backup_task, prune_backup_task,
@@ -21,7 +21,7 @@ API_KEY = os.getenv("API_KEY")
 API_KEY_NAME = "access_token"
 
 # Função para validar a API key
-def validate_api_key(api_key: str = Security(APIKeyHeader(name=API_KEY_NAME, auto_error=True))) -> str: a
+def validate_api_key(api_key: str = Security(APIKeyHeader(name=API_KEY_NAME, auto_error=True))) -> str:
     if api_key != API_KEY:
         raise HTTPException(
             status_code=403,
