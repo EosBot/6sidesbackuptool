@@ -10,7 +10,7 @@ from typing import Annotated, Union, Tuple, List, Dict, Optional
 load_dotenv()
 
 API_KEY = os.getenv("API_KEY")
-API_KEY_NAME = "access_token"
+API_KEY_NAME = os.getenv("API_KEY_NAME")
 
 async def APIKeyValidator(api_key: str = Security(APIKeyHeader(name=API_KEY_NAME, auto_error=True))):
     if api_key != API_KEY:
