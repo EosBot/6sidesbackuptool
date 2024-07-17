@@ -27,3 +27,11 @@ pip install fastapi
 ```bash
 fastapi dev main.py
 ```
+
+# Docker Build
+
+docker build --build-arg GITHUB_TOKEN=TOKEN_GERADO -t 6sides-backup .
+
+# Docker run
+
+docker run -d -p 8000:8000 6sides-backup
