@@ -5,6 +5,7 @@ FROM python:3.9-slim
 RUN apt-get update && apt-get install -y \
     python3-dev \
     python3-pip \
+    python3-virtualenv \
     libacl1-dev \
     libacl1 \
     libssl-dev \
@@ -27,9 +28,6 @@ RUN apt-get install -y \
     borgbackup \
     git
 
-# Instale o virtualenv
-RUN pip install virtualenv
-
 # Limpe o cache do apt-get
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -40,7 +38,6 @@ ENV PATH="/env/bin:$PATH"
 # Instale as dependências Python
 RUN pip install --upgrade pip
 RUN pip install python-dotenv borgapi fastapi
-
 # Use build arguments para fornecer o token de acesso pessoal
 ARG GITHUB_TOKEN
 
@@ -50,8 +47,11 @@ RUN git clone https://${GITHUB_TOKEN}@github.com/EosBot/6sidesbackuptool.git /ap
 # Defina o diretório de trabalho
 WORKDIR /app
 
+# Copie todos os arquivos do diretório atual para /app
+#COPY . /app
+
 # Exponha a porta da aplicação FastAPI
 EXPOSE 8000
 
 # Comando para iniciar a aplicação FastAPI
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["fastapi", "run","main.py"]

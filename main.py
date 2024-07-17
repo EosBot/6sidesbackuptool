@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from borgapi import BorgAPI
 from fastapi import Depends, FastAPI, HTTPException, Security
 from fastapi.security import APIKeyHeader
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Annotated, Union, Tuple, List, Dict, Optional
 
@@ -18,6 +19,21 @@ async def APIKeyValidator(api_key: str = Security(APIKeyHeader(name=API_KEY_NAME
     return api_key
 
 app = FastAPI()
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class InitBackupModel(BaseModel):
