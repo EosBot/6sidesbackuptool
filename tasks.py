@@ -1,5 +1,5 @@
-from .celery import celery_app
-from .borgapi import BorgAPI
+from celery_config import celery_app
+from borgapi import BorgAPI
 
 @celery_app.task
 def init_backup_task(repository: str, options: dict):
