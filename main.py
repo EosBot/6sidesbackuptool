@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from .borgapi import BorgAPI
+from borgapi import BorgAPI
 from fastapi import Depends, FastAPI, HTTPException, Security
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
